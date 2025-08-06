@@ -15,7 +15,7 @@
 [![LangChain](https://img.shields.io/badge/LangChain-🦜🔗-green.svg)](https://langchain.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![Pinecone](https://img.shields.io/badge/Pinecone-🌲-orange.svg)](https://pinecone.io/)
-[![Tavily](https://img.shields.io/badge/Tavily-🔍-purple.svg)](https://app.tavily.com/home?utm_campaign=eden_marco&utm_medium=socials&utm_source=linkedin)
+[![Tavily](https://img.shields.io/badge/Tavily-🔍-purple.svg)](https://app.tavily.com)
 
 </div>
 
@@ -66,13 +66,13 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 - Python 3.10 or higher
 - OpenAI API key
 - Pinecone API key
-- [Tavily API key](https://app.tavily.com/home?utm_campaign=eden_marco&utm_medium=socials&utm_source=linkedin) (required - for documentation crawling and web search)
+- Tavily API key
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/emarco177/documentation-helper.git
+   git clone https://github.com/ItsKh4nh/langchain_doc_helper.git
    cd documentation-helper
    ```
 
@@ -82,12 +82,12 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
    ```env
    PINECONE_API_KEY=your_pinecone_api_key_here
    OPENAI_API_KEY=your_openai_api_key_here
-   TAVILY_API_KEY=your_tavily_api_key_here  # Required - for documentation crawling
+   TAVILY_API_KEY=your_tavily_api_key_here
    ```
 
 3. **Install dependencies**
    ```bash
-   pipenv install
+   pip install -r requirements.txt
    ```
 
 4. **Ingest LangChain Documentation** (Run the ingestion pipeline)
@@ -107,8 +107,18 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 Run the test suite to ensure everything is working correctly:
 
 ```bash
-pipenv run pytest .
+pytest .
 ```
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `PINECONE_API_KEY` | Your Pinecone API key for vector storage | ✅ |
+| `OPENAI_API_KEY` | Your OpenAI API key for LLM access | ✅ |
+| `TAVILY_API_KEY` | Your Tavily API key for documentation crawling and web search | ✅ |
+
 
 ## 📁 Project Structure
 
@@ -128,64 +138,5 @@ documentation-helper/
 ├── ingestion.py                      # Document ingestion pipeline
 ├── consts.py                         # Configuration constants
 ├── logger.py                         # Logging utilities
-├── Tavily Demo Tutorial.ipynb        # 📚 Tutorial: Introduction to Tavily API
-├── Tavily Crawl Demo Tutorial.ipynb  # 📚 Tutorial: Advanced Tavily crawling techniques
-└── requirements files                # Pipfile, Pipfile.lock
+└── requirements.txt                  # Python dependencies
 ```
-
-### 📚 Tutorial Notebooks
-
-The project includes comprehensive Jupyter notebooks that serve as hands-on tutorials:
-
-- **`Tavily Demo Tutorial.ipynb`**: Introduction to Tavily API basics and core functionality
-- **`Tavily Crawl Demo Tutorial.ipynb`**: Advanced tutorial covering Tavily's crawling capabilities, including TavilyMap and TavilyExtract features
-
-These tutorials provide step-by-step guidance on integrating Tavily's powerful web search and crawling capabilities into your AI applications.
-
-## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `PINECONE_API_KEY` | Your Pinecone API key for vector storage | ✅ |
-| `OPENAI_API_KEY` | Your OpenAI API key for LLM access | ✅ |
-| `TAVILY_API_KEY` | Your Tavily API key for documentation crawling and web search | ✅ |
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-## 📚 Learning Resources
-
-This project is designed as a learning tool for understanding:
-- 🦜 LangChain framework implementation
-- 🔍 Vector search and embeddings
-- 💬 Conversational AI development
-- 🏗️ RAG (Retrieval-Augmented Generation) architecture
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🌟 Support
-
-If you find this project helpful, please consider:
-- ⭐ Starring the repository
-- 🐛 Reporting issues
-- 💡 Contributing improvements
-- 📢 Sharing with others
-
----
-
-<div align="center">
-
-### 🔗 Connect with Me
-
-[![Portfolio](https://img.shields.io/badge/Portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://www.udemy.com/course/langchain/?referralCode=D981B8213164A3EA91AC)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eden-marco/)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/EdenEmarco177)
-
-**Built with ❤️ by Eden Marco**
-
-</div>
