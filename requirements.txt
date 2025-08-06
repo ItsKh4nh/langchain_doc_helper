@@ -1,0 +1,13 @@
+certifi
+python-dotenv
+streamlit
+pillow
+requests
+langchain-community
+langchain-chroma
+langchain-openai
+langchain-pinecone
+langchain-tavily
+langchainhub
+langsmith
+tiktoken

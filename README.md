@@ -1,4 +1,3 @@
-
 # 🦜 LangChain Documentation Helper
 
 <div align="center">
@@ -12,14 +11,11 @@
 
 <br>
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![LangChain](https://img.shields.io/badge/LangChain-🦜🔗-green.svg)](https://langchain.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B.svg)](https://streamlit.io/)
 [![Pinecone](https://img.shields.io/badge/Pinecone-🌲-orange.svg)](https://pinecone.io/)
 [![Tavily](https://img.shields.io/badge/Tavily-🔍-purple.svg)](https://app.tavily.com/home?utm_campaign=eden_marco&utm_medium=socials&utm_source=linkedin)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-[![udemy](https://img.shields.io/badge/LangChain%20Udemy%20Course-%2412.99-green)](https://www.udemy.com/course/langchain/?couponCode=LANGCHAINCD8C0B4060)
 
 </div>
 
@@ -67,7 +63,7 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - OpenAI API key
 - Pinecone API key
 - [Tavily API key](https://app.tavily.com/home?utm_campaign=eden_marco&utm_medium=socials&utm_source=linkedin) (required - for documentation crawling and web search)
