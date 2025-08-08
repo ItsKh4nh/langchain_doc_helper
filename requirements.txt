@@ -11,3 +11,5 @@ langchain-tavily
 langchainhub
 langsmith
 tiktoken
+beautifulsoup4
+lxml
