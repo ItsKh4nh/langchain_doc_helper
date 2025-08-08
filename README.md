@@ -102,13 +102,6 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 
 6. **Open your browser** and navigate to `http://localhost:8501`
 
-## 🧪 Testing
-
-Run the test suite to ensure everything is working correctly:
-
-```bash
-pytest .
-```
 ## 🔧 Configuration
 
 ### Environment Variables

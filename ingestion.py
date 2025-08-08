@@ -6,14 +6,15 @@ from typing import Any, Dict, List
 import certifi
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
+
+# from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_tavily import TavilyCrawl, TavilyExtract, TavilyMap
 
-from logger import (Colors, log_error, log_header, log_info, log_success,
-                    log_warning)
+from consts import INDEX_NAME
+from logger import Colors, log_error, log_header, log_info, log_success, log_warning
 
 load_dotenv()
 
@@ -29,13 +30,12 @@ embeddings = OpenAIEmbeddings(
     chunk_size=50,
     retry_min_seconds=10,
 )
-vectorstore = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
-# vectorstore = PineconeVectorStore(
-#     index_name="langchain-docs-2025", embedding=embeddings
-# )
+# vectorstore = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+vectorstore = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
 tavily_extract = TavilyExtract()
 tavily_map = TavilyMap(max_depth=5, max_breadth=20, max_pages=1000)
 tavily_crawl = TavilyCrawl()
+
 
 async def index_documents_async(documents: List[Document], batch_size: int = 50):
     """Process documents in batches asynchronously."""
@@ -91,14 +91,60 @@ async def main():
         "🗺️  TavilyCrawl: Starting to crawl the documentation site",
         Colors.PURPLE,
     )
-    # Crawl the documentation site
-    
-    res = tavily_crawl.invoke({
-        "url": "https://python.langchain.com/",
-        "max_depth": 2,
-        "extract_depth": "advanced"
-    })
-    all_docs = res["results"]
+
+    res = tavily_crawl.invoke(
+        {
+            "url": "https://python.langchain.com/",
+            "max_depth": 2,
+            "extract_depth": "advanced",
+            "format": "text",
+        }
+    )
+
+    all_docs = []
+    for doc_data in res["results"]:
+        if isinstance(doc_data, dict):
+            # TavilyCrawl returns content in 'raw_content' field
+            content = (
+                doc_data.get("raw_content", "")
+                or doc_data.get("content", "")
+                or doc_data.get("text", "")
+                or doc_data.get("body", "")
+                or doc_data.get("page_content", "")
+            )
+
+            # Skip documents with no content
+            if not content.strip():
+                log_warning(
+                    f"⚠️  Skipping document with no content: {doc_data.get('url', 'Unknown URL')}"
+                )
+                continue
+
+            metadata = {
+                "source": doc_data.get("url", ""),
+                "title": doc_data.get("title", ""),
+            }
+            for key, value in doc_data.items():
+                if key not in [
+                    "raw_content",
+                    "content",
+                    "text",
+                    "body",
+                    "page_content",
+                    "url",
+                    "title",
+                ]:
+                    metadata[key] = value
+
+            all_docs.append(Document(page_content=content, metadata=metadata))
+        elif isinstance(doc_data, Document):
+            all_docs.append(doc_data)
+        else:
+            log_warning(f"Skipping unexpected document type: {type(doc_data)}")
+
+    log_info(
+        f"📊 Processed {len(all_docs)} documents with content out of {len(res['results'])} total results"
+    )
 
     # Split documents into chunks
     log_header("DOCUMENT CHUNKING PHASE")

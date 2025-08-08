@@ -5,10 +5,11 @@ from typing import Any, Dict, List
 
 from langchain import hub
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains.history_aware_retriever import \
-    create_history_aware_retriever
+from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
-from langchain_chroma import Chroma
+
+# from langchain_chroma import Chroma
+from langchain_pinecone import PineconeVectorStore
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
@@ -16,12 +17,14 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from consts import INDEX_NAME
 
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-chroma = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+# chroma = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+pinecone_vectorstore = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
 
 
 def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+    # docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+    docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(verbose=True, temperature=0)
 
     rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
@@ -46,7 +49,8 @@ def format_docs(docs):
 
 def run_llm2(query: str, chat_history: List[Dict[str, Any]] = []):
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+    # docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+    docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(model="gpt-4o-mini", verbose=True, temperature=0)
 
     rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
