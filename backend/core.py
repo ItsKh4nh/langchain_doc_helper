@@ -14,22 +14,28 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 
-from consts import INDEX_NAME
+from consts import (
+    INDEX_NAME,
+    EMBEDDING_MODEL_NAME,
+    CHAT_TEMPERATURE,
+    HUB_PROMPT_REPHRASE,
+    HUB_PROMPT_RETRIEVAL_QA_CHAT,
+)
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL_NAME)
 # chroma = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
 pinecone_vectorstore = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
 
 
 def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL_NAME)
     # docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
     docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
-    chat = ChatOpenAI(verbose=True, temperature=0)
+    chat = ChatOpenAI(verbose=True, temperature=CHAT_TEMPERATURE)
 
-    rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
+    rephrase_prompt = hub.pull(HUB_PROMPT_REPHRASE)
 
-    retrieval_qa_chat_prompt = hub.pull("langchain-ai/retrieval-qa-chat")
+    retrieval_qa_chat_prompt = hub.pull(HUB_PROMPT_RETRIEVAL_QA_CHAT)
     stuff_documents_chain = create_stuff_documents_chain(chat, retrieval_qa_chat_prompt)
 
     history_aware_retriever = create_history_aware_retriever(
@@ -48,7 +54,7 @@ def format_docs(docs):
 
 
 def run_llm2(query: str, chat_history: List[Dict[str, Any]] = []):
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL_NAME)
     # docsearch = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
     docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(model="gpt-4o-mini", verbose=True, temperature=0)

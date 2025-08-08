@@ -73,7 +73,7 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 1. **Clone the repository**
    ```bash
    git clone https://github.com/ItsKh4nh/langchain_doc_helper.git
-   cd documentation-helper
+   cd documentation_helper
    ```
 
 2. **Set up environment variables**
@@ -92,7 +92,7 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 
 4. **Ingest LangChain Documentation** (Run the ingestion pipeline)
    ```bash
-   python ingestion.py  # Uses Tavily to crawl and index documentation
+   python ingestion.py  # Uses Tavily to crawl and index documentation into Pinecone
    ```
 
 5. **Run the application**
@@ -116,7 +116,7 @@ The **LangChain Documentation Helper** is a sophisticated AI-powered web applica
 ## 📁 Project Structure
 
 ```
-documentation-helper/
+documentation_helper/
 ├── backend/                          # Core backend logic
 │   ├── __init__.py
 │   └── core.py

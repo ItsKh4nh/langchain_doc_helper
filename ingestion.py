@@ -16,7 +16,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_tavily import TavilyCrawl
 
-from consts import INDEX_NAME
+from consts import INDEX_NAME, EMBEDDING_MODEL_NAME
 from logger import Colors, log_error, log_header, log_info, log_success, log_warning
 
 load_dotenv()
@@ -28,7 +28,7 @@ os.environ["REQUESTS_CA_BUNDLE"] = certifi.where()
 
 
 embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small",
+    model=EMBEDDING_MODEL_NAME,
     show_progress_bar=False,
     chunk_size=50,
     retry_min_seconds=10,
